@@ -1,0 +1,7 @@
+.idea
+output
+videos
+images
+*.mp4
+*.avi
+*.mkv
