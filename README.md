@@ -8,16 +8,25 @@ https://hub.docker.com/r/cwaffles/openpose
 - CUDA 10.1 or higher on your host, check with `nvidia-smi`
 
 ### Example
-Build image 
+- Build image 
+    ```shell script
+    docker  build .  -t openpose:latest
+    ```
 
-`docker  build .  -t openpose:latest`
+- Run container
 
-Run container
+    ```shell script
+    docker run -it --rm --runtime=nvidia openpose:latest /bin/bash
+    ```
+  OR
 
-`docker run -it --rm --runtime=nvidia openpose:latest /bin/bash`
-
-`docker run  -v /etc/localtime:/etc/localtime -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1  -it --rm --runtime=nvidia openpose-python /bin/bash `
-
+    ```shell script
+    docker run  -v /etc/localtime:/etc/localtime \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      -e DISPLAY=$DISPLAY \
+      -e QT_X11_NO_MITSHM=1  \
+      -it --rm --runtime=nvidia openpose /bin/bash
+    ```
 The Openpose repo is in `/openpose`
 
 # issue

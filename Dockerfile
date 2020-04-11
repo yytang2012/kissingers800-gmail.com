@@ -2,15 +2,14 @@ ARG IMAGE_NAME=nvidia/cuda
 FROM ${IMAGE_NAME}:10.1-devel-ubuntu18.04 AS base
 LABEL maintainer="Yutao Tang <kissingers800@gmail.com>"
 
-ENV CUDNN_VERSION 7.6.0.64
+ARG CUDNN_VERSION=7.6.4.38
 LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-            libcudnn7=$CUDNN_VERSION-1+cuda10.1 \
-            libcudnn7-dev=$CUDNN_VERSION-1+cuda10.1 && \
+            libcudnn7=${CUDNN_VERSION}-1+cuda10.1 \
+            libcudnn7-dev=${CUDNN_VERSION}-1+cuda10.1 && \
     apt-mark hold libcudnn7 && \
     rm -rf /var/lib/apt/lists/*
-
 
 ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs
 
@@ -48,6 +47,7 @@ RUN cd $OPENCV_ROOT && test -d opencv_contrib && echo "opencv_contrib exist" || 
 
 
 #for python api
+RUN pip3 install --upgrade setuptools pip
 RUN pip3 install numpy opencv-python==3.4.5.20
 
 
